@@ -1,6 +1,11 @@
 package AU.MightyFour.Sitcomizer;
 
 import android.app.Activity;
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -13,6 +18,11 @@ import java.util.List;
 
 public class MainActivity extends Activity
 {
+
+
+
+	private SensorManager _sensorManager;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +46,37 @@ public class MainActivity extends Activity
         viewPager.setCurrentItem(1);
 
         setContentView(viewPager);
+
+	    _sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+	    _sensorManager.registerListener(
+		    _shakeEventListener,
+		    _sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+		    SensorManager.SENSOR_DELAY_NORMAL);
     }
+
+	private final SensorEventListener _shakeEventListener = new SensorEventListener()
+	{
+		public void onSensorChanged(SensorEvent sensorEvent)
+		{
+			float x = sensorEvent.values[0];
+			float y = sensorEvent.values[1];
+			float z = sensorEvent.values[2];
+			_previousAcceleration = _currentAcceleration;
+			_currentAcceleration = (float) Math.sqrt((double) (x * x + y * y + z * z));
+			if (_currentAcceleration - _previousAcceleration > BORDER_ACCELERATION)
+			{
+				createAndLaunchPlayer(R.raw.pos_laugh);
+			}
+		}
+
+		public void onAccuracyChanged(Sensor sensor, int accuracy) {}
+
+		private float _previousAcceleration = SensorManager.GRAVITY_EARTH;
+		private float _currentAcceleration = SensorManager.GRAVITY_EARTH;
+
+		private final float BORDER_ACCELERATION = 11;
+
+	};
 
 	private void createAndLaunchPlayer(int rawId)
 	{
