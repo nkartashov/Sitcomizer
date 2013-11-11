@@ -1,9 +1,15 @@
 package AU.MightyFour.Sitcomizer;
 
 import android.app.Activity;
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -35,8 +41,43 @@ public class MainActivity extends Activity
 
         viewPager.setCurrentItem(1);
 
+	    Log.v(TAG, "all pages are initialized");
+
         setContentView(viewPager);
+
+	    _sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+	    _sensorManager.registerListener(
+		    _shakeEventListener,
+		    _sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+		    SensorManager.SENSOR_DELAY_NORMAL);
     }
+
+	private final SensorEventListener _shakeEventListener = new SensorEventListener()
+	{
+		public void onSensorChanged(SensorEvent sensorEvent)
+		{
+			float x = sensorEvent.values[0];
+			float y = sensorEvent.values[1];
+			float z = sensorEvent.values[2];
+			_previousAcceleration = _currentAcceleration;
+			_currentAcceleration = (float) Math.sqrt((double) (x * x + y * y + z * z));
+			if (_currentAcceleration - _previousAcceleration > BORDER_ACCELERATION)
+			{
+				Log.v(TAG, "shake event happened");
+				createAndLaunchPlayer(R.raw.neg_wah_wah);
+			}
+		}
+
+		public void onAccuracyChanged(Sensor sensor, int accuracy) {}
+
+		private float _previousAcceleration = SensorManager.GRAVITY_EARTH;
+		private float _currentAcceleration = SensorManager.GRAVITY_EARTH;
+
+		private final float BORDER_ACCELERATION = 11;
+
+		private final String TAG = "ShakeEventListener";
+
+	};
 
 	private void createAndLaunchPlayer(int rawId)
 	{
@@ -95,5 +136,7 @@ public class MainActivity extends Activity
 		});
 	}
 
+	private SensorManager _sensorManager;
 	private MediaPlayer _mediaPlayer = null;
+	private final String TAG = "MainActivity";
 }
