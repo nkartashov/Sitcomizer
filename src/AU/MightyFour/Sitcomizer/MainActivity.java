@@ -9,6 +9,7 @@ import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -18,11 +19,6 @@ import java.util.List;
 
 public class MainActivity extends Activity
 {
-
-
-
-	private SensorManager _sensorManager;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +41,8 @@ public class MainActivity extends Activity
 
         viewPager.setCurrentItem(1);
 
+	    Log.v(TAG, "all pages are initialized");
+
         setContentView(viewPager);
 
 	    _sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -65,7 +63,8 @@ public class MainActivity extends Activity
 			_currentAcceleration = (float) Math.sqrt((double) (x * x + y * y + z * z));
 			if (_currentAcceleration - _previousAcceleration > BORDER_ACCELERATION)
 			{
-				createAndLaunchPlayer(R.raw.pos_laugh);
+				Log.v(TAG, "shake event happened");
+				createAndLaunchPlayer(R.raw.neg_wah_wah);
 			}
 		}
 
@@ -75,6 +74,8 @@ public class MainActivity extends Activity
 		private float _currentAcceleration = SensorManager.GRAVITY_EARTH;
 
 		private final float BORDER_ACCELERATION = 11;
+
+		private final String TAG = "ShakeEventListener";
 
 	};
 
@@ -135,5 +136,7 @@ public class MainActivity extends Activity
 		});
 	}
 
+	private SensorManager _sensorManager;
 	private MediaPlayer _mediaPlayer = null;
+	private final String TAG = "MainActivity";
 }
