@@ -9,12 +9,12 @@ package AU.MightyFour.Sitcomizer;
  */
 public class ApplicationContext
 {
-	public ApplicationContext getContext() {return _context;}
+	public static ApplicationContext getContext() {return _context;}
 
 	private ApplicationContext()
 	{
 		//Bluetooth init code goes here
 	}
 
-	private ApplicationContext _context = new ApplicationContext();
+	private static ApplicationContext _context = new ApplicationContext();
 }
