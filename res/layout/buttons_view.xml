@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" android:layout_weight="1">
+        <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="New Button"
+                android:id="@+id/up_left_button" android:layout_weight="1"/>
+        <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="New Button"
+                android:id="@+id/up_right_button" android:layout_weight="1"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" android:layout_weight="1">
+        <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="New Button"
+                android:id="@+id/central_button"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" android:layout_weight="1">
+        <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="New Button"
+                android:id="@+id/bottom_left_button" android:layout_weight="1"/>
+        <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="New Button"
+                android:id="@+id/bottom_right_button" android:layout_weight="1"/>
+    </LinearLayout>
+</LinearLayout>
