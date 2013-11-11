@@ -32,9 +32,6 @@ public class MainActivity extends Activity
         page = inflatePositiveEmotionsPage();
         pages.add (page);
 
-        page = inflater.inflate(R.layout.oneliners_view, null);
-        pages.add (page);
-
         CustomPagerAdapter pagerAdapter = new CustomPagerAdapter(pages);
         ViewPager viewPager = new ViewPager(this);
         viewPager.setAdapter(pagerAdapter);
@@ -47,9 +44,9 @@ public class MainActivity extends Activity
 
 	    _sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 	    _sensorManager.registerListener(
-		    _shakeEventListener,
-		    _sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-		    SensorManager.SENSOR_DELAY_NORMAL);
+                _shakeEventListener,
+                _sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                SensorManager.SENSOR_DELAY_NORMAL);
     }
 
 	private final SensorEventListener _shakeEventListener = new SensorEventListener()
@@ -87,20 +84,18 @@ public class MainActivity extends Activity
 		_mediaPlayer = MediaPlayer.create(this, rawId);
 		_mediaPlayer.start();
 
-		_mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
-		{
-			@Override
-			public void onCompletion(MediaPlayer player)
-			{
-				player.release();
-			}
-		});
+		_mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer player) {
+                player.release();
+            }
+        });
 	}
 
 	private View inflatePositiveEmotionsPage()
 	{
 		LayoutInflater inflater = LayoutInflater.from (this);
-		View result = inflater.inflate(R.layout.buttons_view, null);
+		View result = inflater.inflate(R.layout.positive_emo_view, null);
 		inflateButton(result, R.id.central_button, "Laugh", R.raw.pos_laugh);
 		inflateButton(result, R.id.up_left_button, "Cheer", R.raw.pos_cheer);
 		inflateButton(result, R.id.up_right_button, "Aww", R.raw.pos_aww);
@@ -113,7 +108,7 @@ public class MainActivity extends Activity
 	private View inflateNegativeEmotionPage()
 	{
 		LayoutInflater inflater = LayoutInflater.from (this);
-		View result = inflater.inflate(R.layout.buttons_view, null);
+		View result = inflater.inflate(R.layout.negative_emo_view, null);
 		inflateButton(result, R.id.up_left_button, "Boo", R.raw.neg_boo);
 		inflateButton(result, R.id.up_right_button, "Sad trombone", R.raw.neg_wah_wah);
 		inflateButton(result, R.id.bottom_left_button, "Shocked", R.raw.neg_shocked);
