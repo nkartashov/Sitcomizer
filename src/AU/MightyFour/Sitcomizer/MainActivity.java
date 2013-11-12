@@ -4,10 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -40,13 +37,17 @@ public class MainActivity extends Activity
 
 	    Log.v(TAG, "all pages are initialized");
 
-        setContentView(viewPager);
+	    SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+	    sensorManager.registerListener(
+	        _gestureEventListener,
+		    sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+		    SensorManager.SENSOR_DELAY_NORMAL);
 
-	    _sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-	    _sensorManager.registerListener(
-                _shakeEventListener,
-                _sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-                SensorManager.SENSOR_DELAY_NORMAL);
+
+	    setContentView(viewPager);
+
+	    MusicPlayer.initializePlayer(this);
+	    setGestureEventListener();
     }
 
 
@@ -73,49 +74,10 @@ public class MainActivity extends Activity
         }
     }
 
-
-
-	private final SensorEventListener _shakeEventListener = new SensorEventListener()
+	private void setGestureEventListener()
 	{
-		public void onSensorChanged(SensorEvent sensorEvent)
-		{
-			float x = sensorEvent.values[0];
-			float y = sensorEvent.values[1];
-			float z = sensorEvent.values[2];
-			_previousAcceleration = _currentAcceleration;
-			_currentAcceleration = (float) Math.sqrt((double) (x * x + y * y + z * z));
-			if (_currentAcceleration - _previousAcceleration > BORDER_ACCELERATION)
-			{
-				Log.v(TAG, "shake event happened");
-				createAndLaunchPlayer(R.raw.neg_wah_wah);
-			}
-		}
-
-		public void onAccuracyChanged(Sensor sensor, int accuracy) {}
-
-		private float _previousAcceleration = SensorManager.GRAVITY_EARTH;
-		private float _currentAcceleration = SensorManager.GRAVITY_EARTH;
-
-		private final float BORDER_ACCELERATION = 11;
-
-		private final String TAG = "ShakeEventListener";
-
-	};
-
-	private void createAndLaunchPlayer(int rawId)
-	{
-		if(_mediaPlayer != null)
-			_mediaPlayer.release();
-
-		_mediaPlayer = MediaPlayer.create(this, rawId);
-		_mediaPlayer.start();
-
-		_mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer player) {
-                player.release();
-            }
-        });
+		_gestureEventListener.addHandler(GestureTypes.SHAKE_GESTURE, R.raw.pos_laugh);
+		_gestureEventListener.addHandler(GestureTypes.WINNER_GESTURE, R.raw.pos_applause);
 	}
 
 	private View inflatePositiveEmotionsPage()
@@ -152,12 +114,11 @@ public class MainActivity extends Activity
 			@Override
 			public void onClick(View view)
 			{
-				createAndLaunchPlayer(soundFileId);
+				MusicPlayer.createAndLaunchPlayer(soundFileId);
 			}
 		});
 	}
 
-	private SensorManager _sensorManager;
-	private MediaPlayer _mediaPlayer = null;
+	private GestureEventListener _gestureEventListener = new GestureEventListener();
 	private final String TAG = "MainActivity";
 }
