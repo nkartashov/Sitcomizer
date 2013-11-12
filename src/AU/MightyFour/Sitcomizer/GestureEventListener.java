@@ -50,7 +50,10 @@ public class GestureEventListener implements SensorEventListener
 
 	private void handleGesture(Integer event)
 	{
-		MusicPlayer.createAndLaunchPlayer(_handlers.get(event));
+
+		Integer handler = _handlers.get(event);
+		if (handler != null)
+			MusicPlayer.createAndLaunchPlayer(handler);
 	}
 
 	@Override
