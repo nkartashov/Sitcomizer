@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+            android:title="SHAKE"
+            android:icon="@drawable/ic_shake" >
+        <SwitchPreference
+            android:key="switch_shake_key"
+            android:summary="@string/switch_shake_summary"
+            android:title="@string/switch_shake_title"
+            android:disableDependentsState="false">
+        </SwitchPreference>
+
+        <ListPreference
+            android:entries="@array/sounds"
+            android:entryValues="@array/sounds_values"
+            android:dependency="switch_shake_key"
+            android:summary="Choose sound"
+            android:key="list_shake_key"
+            android:title="@string/list_shake_title">
+        </ListPreference>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            android:title="WINNER">
+        <SwitchPreference
+                android:id="@+id/switch_winner"
+                android:key="switch_winner_key"
+                android:summary="@string/switch_winner_summary"
+                android:title="@string/switch_winner_title"
+                android:disableDependentsState="false" >
+        </SwitchPreference>
+        <ListPreference
+                android:entries="@array/sounds"
+                android:entryValues="@array/sounds_values"
+                android:key="list_winner_key"
+                android:dependency="switch_winner_key"
+                android:summary="Choose sound"
+                android:title="@string/list_winner_title">
+        </ListPreference>
+    </PreferenceCategory>
+
+</PreferenceScreen>

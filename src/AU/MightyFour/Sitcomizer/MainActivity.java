@@ -2,16 +2,15 @@ package AU.MightyFour.Sitcomizer;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
+import android.view.*;
 import android.widget.Button;
 
 import java.util.ArrayList;
@@ -19,9 +18,15 @@ import java.util.List;
 
 public class MainActivity extends Activity
 {
+    private int rawOnShake;
+    private SharedPreferences sp;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        rawOnShake = R.raw.neg_wah_wah;
+        sp = PreferenceManager.getDefaultSharedPreferences(this);
 
         LayoutInflater inflater = LayoutInflater.from (this);
         List<View> pages = new ArrayList<View>();
@@ -40,56 +45,83 @@ public class MainActivity extends Activity
 
 	    Log.v(TAG, "all pages are initialized");
 
-        setContentView(viewPager);
+	    setContentView(viewPager);
 
-	    _sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-	    _sensorManager.registerListener(
-                _shakeEventListener,
-                _sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-                SensorManager.SENSOR_DELAY_NORMAL);
+	    MusicPlayer.initializePlayer(this);
+	    setGestureEventListener();
     }
 
-	private final SensorEventListener _shakeEventListener = new SensorEventListener()
+
+	@Override
+	public void onPause()
 	{
-		public void onSensorChanged(SensorEvent sensorEvent)
-		{
-			float x = sensorEvent.values[0];
-			float y = sensorEvent.values[1];
-			float z = sensorEvent.values[2];
-			_previousAcceleration = _currentAcceleration;
-			_currentAcceleration = (float) Math.sqrt((double) (x * x + y * y + z * z));
-			if (_currentAcceleration - _previousAcceleration > BORDER_ACCELERATION)
-			{
-				Log.v(TAG, "shake event happened");
-				createAndLaunchPlayer(R.raw.neg_wah_wah);
-			}
-		}
+		_gestureEventListener.setInactive();
+		super.onPause();
+	}
 
-		public void onAccuracyChanged(Sensor sensor, int accuracy) {}
-
-		private float _previousAcceleration = SensorManager.GRAVITY_EARTH;
-		private float _currentAcceleration = SensorManager.GRAVITY_EARTH;
-
-		private final float BORDER_ACCELERATION = 11;
-
-		private final String TAG = "ShakeEventListener";
-
-	};
-
-	private void createAndLaunchPlayer(int rawId)
+	@Override
+	public void onResume()
 	{
-		if(_mediaPlayer != null)
-			_mediaPlayer.release();
+		super.onResume();
+		_gestureEventListener.setActive();
 
-		_mediaPlayer = MediaPlayer.create(this, rawId);
-		_mediaPlayer.start();
+        String raw_name = sp.getString("list_shake_key", "neg_wah_wah");
+        Log.v(TAG, raw_name);
 
-		_mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer player) {
-                player.release();
-            }
-        });
+        try {
+            rawOnShake = R.raw.class.getField(raw_name).getInt(R.raw.class.getField(raw_name));
+            Log.v(TAG, String.valueOf(rawOnShake));
+            _gestureEventListener.addHandler(GestureTypes.SHAKE_GESTURE, rawOnShake);
+        }
+        catch (Exception e)
+        {}
+
+	}
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId()) {
+            case R.id.menu_settings:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.menu_help:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+	private void setGestureEventListener()
+	{
+		_gestureEventListener = new GestureEventListener();
+
+		_gestureEventListener.setActive();
+
+		SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+		sensorManager.registerListener(
+                _gestureEventListener.accelerationEventListener(),
+                sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                SensorManager.SENSOR_DELAY_NORMAL);
+
+		sensorManager.registerListener(
+                _gestureEventListener.gyroscopeEventListener(),
+                sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE),
+                SensorManager.SENSOR_DELAY_NORMAL);
+
+		_gestureEventListener.addHandler(GestureTypes.SHAKE_GESTURE, R.raw.snd_shotgun_reload);
+		//_gestureEventListener.addHandler(GestureTypes.WINNER_GESTURE, R.raw.pos_applause);
+		_gestureEventListener.addHandler(GestureTypes.TILT_LEFT_GESTURE, R.raw.snd_lightsaber_on);
+		_gestureEventListener.addHandler(GestureTypes.TILT_RIGHT_GESTURE, R.raw.snd_lightsaber_out);
 	}
 
 	private View inflatePositiveEmotionsPage()
@@ -112,7 +144,7 @@ public class MainActivity extends Activity
 		inflateButton(result, R.id.up_left_button, "Boo", R.raw.neg_boo);
 		inflateButton(result, R.id.up_right_button, "Sad trombone", R.raw.neg_wah_wah);
 		inflateButton(result, R.id.bottom_left_button, "Shocked", R.raw.neg_shocked);
-		inflateButton(result, R.id.bottom_right_button, "No one is interested", R.raw.neg_crickets);
+		inflateButton(result, R.id.bottom_right_button, "Ba dum tss", R.raw.snd_ba_dum_tss);
 
 		return result;
 	}
@@ -126,12 +158,11 @@ public class MainActivity extends Activity
 			@Override
 			public void onClick(View view)
 			{
-				createAndLaunchPlayer(soundFileId);
+				MusicPlayer.createAndLaunchPlayer(soundFileId);
 			}
 		});
 	}
 
-	private SensorManager _sensorManager;
-	private MediaPlayer _mediaPlayer = null;
+	private GestureEventListener _gestureEventListener;
 	private final String TAG = "MainActivity";
 }

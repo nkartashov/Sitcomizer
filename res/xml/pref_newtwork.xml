@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+            android:title="Bluetooth">
+        <CheckBoxPreference
+                android:key="bluetooth_chb"
+                android:summary="Use bluetooth"
+                android:title="Bluetooth">
+        </CheckBoxPreference>
+        <EditTextPreference
+                android:key="name_bluetooth"
+                android:summary="Edit your name"
+                android:title="Device name">
+        </EditTextPreference>
+        <ListPreference
+                android:key="list2"
+                android:summary="Choose device"
+                android:title="Available devices">
+        </ListPreference>
+    </PreferenceCategory>
+    <PreferenceCategory
+            android:title="WiFi">
+        <PreferenceScreen
+                android:fragment="AU.MightyFour.Sitcomizer.GestureSettingsFragment"
+                android:summary="Use WiFi"
+                android:title="WiFi">
+        </PreferenceScreen>
+        <PreferenceScreen
+
+                android:summary="@string/screen2_summary"
+                android:title="@string/screen2_title">
+            <intent
+                    android:action="android.intent.action.VIEW"
+                    android:data="http://www.developer.android.com">
+            </intent>
+        </PreferenceScreen>
+    </PreferenceCategory>
+</PreferenceScreen>
