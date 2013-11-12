@@ -37,13 +37,6 @@ public class MainActivity extends Activity
 
 	    Log.v(TAG, "all pages are initialized");
 
-	    SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-	    sensorManager.registerListener(
-	        _gestureEventListener,
-		    sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-		    SensorManager.SENSOR_DELAY_NORMAL);
-
-
 	    setContentView(viewPager);
 
 	    MusicPlayer.initializePlayer(this);
@@ -76,8 +69,20 @@ public class MainActivity extends Activity
 
 	private void setGestureEventListener()
 	{
+		SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+		sensorManager.registerListener(
+			_gestureEventListener.accelerationEventListener(),
+			sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+			SensorManager.SENSOR_DELAY_NORMAL);
+
+		sensorManager.registerListener(
+			_gestureEventListener.gyroscopeEventListener(),
+			sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE),
+			SensorManager.SENSOR_DELAY_NORMAL);
+
 		_gestureEventListener.addHandler(GestureTypes.SHAKE_GESTURE, R.raw.pos_laugh);
 		_gestureEventListener.addHandler(GestureTypes.WINNER_GESTURE, R.raw.pos_applause);
+		_gestureEventListener.addHandler(GestureTypes.TILT_LEFT_GESTURE, R.raw.snd_lightsaber_on);
 	}
 
 	private View inflatePositiveEmotionsPage()
