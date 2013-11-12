@@ -90,6 +90,7 @@ public class GestureEventListener
 
 		private void updateAccelerationData(SensorEvent event)
 		{
+			Log.v(TAG, "acceleration sensor value changed");
 			if (!_firstUpdateHappened)
 			{
 				for (int i = 0; i < 3; i++)
@@ -106,8 +107,6 @@ public class GestureEventListener
 					_previousAccel[i] = _currentAccel[i];
 					_currentAccel[i] = event.values[i];
 				}
-
-
 		}
 
 		private boolean identifyForwardGesture()
@@ -136,9 +135,17 @@ public class GestureEventListener
 		@Override
 		public void onSensorChanged(SensorEvent event)
 		{
+			Log.v(TAG, "gyroscope sensor value changed");
 			updateValues(event);
 			if (identifyLeftTilt())
+			{
 				handleGesture(GestureTypes.TILT_LEFT_GESTURE);
+				return;
+			}
+			if (identifyRightTilt())
+			{
+				handleGesture(GestureTypes.TILT_RIGHT_GESTURE);
+			}
 		}
 
 		@Override
@@ -164,6 +171,12 @@ public class GestureEventListener
 		{
 			return yPrev - yCur > BORDER_SPEED;
 		}
+
+		private boolean identifyRightTilt()
+		{
+			return yCur - yPrev > BORDER_SPEED;
+		}
+
 
 		private final double BORDER_SPEED = 4;
 

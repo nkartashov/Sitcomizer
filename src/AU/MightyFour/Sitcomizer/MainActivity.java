@@ -56,9 +56,8 @@ public class MainActivity extends Activity
 	{
 		super.onResume();
 		_gestureEventListener.setActive();
+
 	}
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -103,6 +102,7 @@ public class MainActivity extends Activity
 		_gestureEventListener.addHandler(GestureTypes.SHAKE_GESTURE, R.raw.snd_shotgun_reload);
 		//_gestureEventListener.addHandler(GestureTypes.WINNER_GESTURE, R.raw.pos_applause);
 		_gestureEventListener.addHandler(GestureTypes.TILT_LEFT_GESTURE, R.raw.snd_lightsaber_on);
+		_gestureEventListener.addHandler(GestureTypes.TILT_RIGHT_GESTURE, R.raw.snd_lightsaber_out);
 	}
 
 	private View inflatePositiveEmotionsPage()
@@ -125,7 +125,7 @@ public class MainActivity extends Activity
 		inflateButton(result, R.id.up_left_button, "Boo", R.raw.neg_boo);
 		inflateButton(result, R.id.up_right_button, "Sad trombone", R.raw.neg_wah_wah);
 		inflateButton(result, R.id.bottom_left_button, "Shocked", R.raw.neg_shocked);
-		inflateButton(result, R.id.bottom_right_button, "No one is interested", R.raw.neg_crickets);
+		inflateButton(result, R.id.bottom_right_button, "Ba dum tss", R.raw.snd_ba_dum_tss);
 
 		return result;
 	}
