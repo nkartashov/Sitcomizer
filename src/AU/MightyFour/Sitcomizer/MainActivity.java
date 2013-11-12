@@ -17,6 +17,26 @@ import android.widget.Button;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import android.app.Activity;
+import android.preference.PreferenceManager;
+import android.view.MenuItem;
+import android.view.View;
+import android.app.FragmentManager;
+
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
 public class MainActivity extends Activity
 {
     @Override
@@ -48,6 +68,32 @@ public class MainActivity extends Activity
                 _sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 SensorManager.SENSOR_DELAY_NORMAL);
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId()) {
+            case R.id.menu_settings:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.menu_help:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
 
 	private final SensorEventListener _shakeEventListener = new SensorEventListener()
 	{
