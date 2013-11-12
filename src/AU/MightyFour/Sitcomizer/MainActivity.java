@@ -44,6 +44,22 @@ public class MainActivity extends Activity
     }
 
 
+	@Override
+	public void onPause()
+	{
+		_gestureEventListener.setInactive();
+		super.onPause();
+	}
+
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+		_gestureEventListener.setActive();
+	}
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -69,6 +85,10 @@ public class MainActivity extends Activity
 
 	private void setGestureEventListener()
 	{
+		_gestureEventListener = new GestureEventListener();
+
+		_gestureEventListener.setActive();
+
 		SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 		sensorManager.registerListener(
 			_gestureEventListener.accelerationEventListener(),
@@ -80,8 +100,8 @@ public class MainActivity extends Activity
 			sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE),
 			SensorManager.SENSOR_DELAY_NORMAL);
 
-		_gestureEventListener.addHandler(GestureTypes.SHAKE_GESTURE, R.raw.pos_laugh);
-		_gestureEventListener.addHandler(GestureTypes.WINNER_GESTURE, R.raw.pos_applause);
+		_gestureEventListener.addHandler(GestureTypes.SHAKE_GESTURE, R.raw.snd_shotgun_reload);
+		//_gestureEventListener.addHandler(GestureTypes.WINNER_GESTURE, R.raw.pos_applause);
 		_gestureEventListener.addHandler(GestureTypes.TILT_LEFT_GESTURE, R.raw.snd_lightsaber_on);
 	}
 
@@ -124,6 +144,6 @@ public class MainActivity extends Activity
 		});
 	}
 
-	private GestureEventListener _gestureEventListener = new GestureEventListener();
+	private GestureEventListener _gestureEventListener;
 	private final String TAG = "MainActivity";
 }

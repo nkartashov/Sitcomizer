@@ -25,6 +25,18 @@ public class GestureEventListener
 		_handlers.put(event, handler);
 	}
 
+	public void setActive()
+	{
+		Log.v(TAG, "set to active");
+		_isActive = true;
+	}
+
+	public void setInactive()
+	{
+		Log.v(TAG, "set to inactive");
+		_isActive = false;
+	}
+
 	public SensorEventListener accelerationEventListener()
 	{
 		return _accelerationEventListener;
@@ -35,8 +47,9 @@ public class GestureEventListener
 		return _gyroscopeEventListener;
 	}
 
-	private final String TAG = "ShakeEventListener";
+	private final String TAG = "GestureEventListener";
 	private HashMap<Integer, Integer> _handlers = new HashMap<Integer, Integer>();
+	private boolean _isActive = false;
 
 	private final int X = 0;
 	private final int Y = 1;
@@ -44,6 +57,8 @@ public class GestureEventListener
 
 	private void handleGesture(Integer event)
 	{
+		if (!_isActive)
+			return;
 		Integer handler = _handlers.get(event);
 		if (handler != null)
 			MusicPlayer.createAndLaunchPlayer(handler);
@@ -113,7 +128,7 @@ public class GestureEventListener
 		private final double BORDER_SHAKE_ACCELERATION = 11;
 		private final double BORDER_WINNER_ACCELERATION = 11;
 
-
+		private final String TAG = "ShakeEventListener";
 	};
 
 	private SensorEventListener _gyroscopeEventListener = new SensorEventListener()
@@ -155,6 +170,8 @@ public class GestureEventListener
 		private boolean _firstRead = true;
 		private double yPrev = 0;
 		private double yCur = 0;
+
+		private final String TAG = "TiltEventListener";
 	};
 
 }
