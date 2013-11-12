@@ -1,13 +1,13 @@
 package AU.MightyFour.Sitcomizer;
 
-import android.app.Activity;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
+import android.preference.ListPreference;
+import android.preference.Preference;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,19 +16,23 @@ import android.widget.EditText;
  * Time: 1:09
  * To change this template use File | Settings | File Templates.
  */
-import android.os.Bundle;
-import android.preference.PreferenceActivity;
 
-import java.util.List;
-
-import static android.app.PendingIntent.getActivity;
-
-public class SettingsActivity extends PreferenceActivity {
+public class SettingsActivity extends PreferenceActivity  {
 
     @Override
     public void onBuildHeaders(List<Header> target) {
         loadHeadersFromResource(R.xml.pref_head, target);
+
     }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    //PreferenceManager.setDefaultValues(this, R.xml.pref_gesture, false);
+    }
+
+
+
 }
 
 

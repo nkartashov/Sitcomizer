@@ -2,31 +2,32 @@
 <PreferenceScreen
         xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
-            android:title="@string/category1">
+            android:title="Bluetooth">
         <CheckBoxPreference
-                android:key="chb2"
-                android:summary="@string/checkbox2_summary"
-                android:title="@string/checkbox2_title">
+                android:key="bluetooth_chb"
+                android:summary="Use bluetooth"
+                android:title="Bluetooth">
         </CheckBoxPreference>
         <EditTextPreference
-                android:key="address2"
-                android:summary="@string/edittext2_summary"
-                android:title="@string/edittext2_title">
+                android:key="name_bluetooth"
+                android:summary="Edit your name"
+                android:title="Device name">
         </EditTextPreference>
         <ListPreference
                 android:key="list2"
-                android:summary="@string/list2_summary"
-                android:title="@string/list2_title">
+                android:summary="Choose device"
+                android:title="Available devices">
         </ListPreference>
     </PreferenceCategory>
     <PreferenceCategory
-            android:title="@string/category2">
+            android:title="WiFi">
         <PreferenceScreen
-                android:fragment="AU.MightyThree.Sitcomizer.GestureSettingsFragment"
-                android:summary="@string/screen1_summary"
-                android:title="@string/screen1_title">
+                android:fragment="AU.MightyFour.Sitcomizer.GestureSettingsFragment"
+                android:summary="Use WiFi"
+                android:title="WiFi">
         </PreferenceScreen>
         <PreferenceScreen
+
                 android:summary="@string/screen2_summary"
                 android:title="@string/screen2_title">
             <intent
