@@ -3,9 +3,11 @@ package AU.MightyFour.Sitcomizer;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.*;
@@ -16,9 +18,15 @@ import java.util.List;
 
 public class MainActivity extends Activity
 {
+    private int rawOnShake;
+    private SharedPreferences sp;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        rawOnShake = R.raw.neg_wah_wah;
+        sp = PreferenceManager.getDefaultSharedPreferences(this);
 
         LayoutInflater inflater = LayoutInflater.from (this);
         List<View> pages = new ArrayList<View>();
@@ -57,6 +65,17 @@ public class MainActivity extends Activity
 		super.onResume();
 		_gestureEventListener.setActive();
 
+        String raw_name = sp.getString("list_shake_key", "neg_wah_wah");
+        Log.v(TAG, raw_name);
+
+        try {
+            rawOnShake = R.raw.class.getField(raw_name).getInt(R.raw.class.getField(raw_name));
+            Log.v(TAG, String.valueOf(rawOnShake));
+            _gestureEventListener.addHandler(GestureTypes.SHAKE_GESTURE, rawOnShake);
+        }
+        catch (Exception e)
+        {}
+
 	}
 
     @Override
@@ -90,14 +109,14 @@ public class MainActivity extends Activity
 
 		SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 		sensorManager.registerListener(
-			_gestureEventListener.accelerationEventListener(),
-			sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-			SensorManager.SENSOR_DELAY_NORMAL);
+                _gestureEventListener.accelerationEventListener(),
+                sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                SensorManager.SENSOR_DELAY_NORMAL);
 
 		sensorManager.registerListener(
-			_gestureEventListener.gyroscopeEventListener(),
-			sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE),
-			SensorManager.SENSOR_DELAY_NORMAL);
+                _gestureEventListener.gyroscopeEventListener(),
+                sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE),
+                SensorManager.SENSOR_DELAY_NORMAL);
 
 		_gestureEventListener.addHandler(GestureTypes.SHAKE_GESTURE, R.raw.snd_shotgun_reload);
 		//_gestureEventListener.addHandler(GestureTypes.WINNER_GESTURE, R.raw.pos_applause);
