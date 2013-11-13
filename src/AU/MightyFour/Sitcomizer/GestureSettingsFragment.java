@@ -30,10 +30,15 @@ public class GestureSettingsFragment extends PreferenceFragment implements Share
 
     private void AllInit()
     {
+        CheckBoxInit("checkbox_shake_key");
+        CheckBoxInit("checkbox_winner_key");
+        CheckBoxInit("checkbox_tilt_left_key");
+        CheckBoxInit("checkbox_tilt_right_key");
         ListInit("list_shake_key");
         ListInit("list_winner_key");
-        SwitchInit("switch_shake_key");
-        SwitchInit("switch_winner_key");
+        ListInit("list_tilt_left_key");
+        ListInit("list_tilt_right_key");
+
     }
 
     private void ListInit(String key)
@@ -46,12 +51,14 @@ public class GestureSettingsFragment extends PreferenceFragment implements Share
         }
         list_pref.setEntries(raw_entries);
         list_pref.setEntryValues(raw_entries);
+        list_pref.setSummary(list_pref.getEntry());
     }
 
-    private void SwitchInit(String key)
+    private void CheckBoxInit(String key)
     {
-        SwitchPreference switch_pref = (SwitchPreference) findPreference(key);
-        switch_pref.setChecked(false);
+        CheckBoxPreference checkbox_pref = (CheckBoxPreference) findPreference(key);
+        checkbox_pref.setDefaultValue(false);
+        checkbox_pref.setPersistent(true);
     }
 
     @Override
@@ -59,6 +66,7 @@ public class GestureSettingsFragment extends PreferenceFragment implements Share
         super.onResume();
         getPreferenceScreen().getSharedPreferences()
                 .registerOnSharedPreferenceChangeListener(this);
+
     }
 
     @Override

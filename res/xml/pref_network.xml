@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+            android:title="Bluetooth">
+        <SwitchPreference
+                android:switchTextOn="ON"
+                android:switchTextOff="OFF"
+                android:key="switch_bluetooth_key"
+                android:icon="@drawable/ic_bluetooth"
+                android:summaryOn="Ready to get into sitcompany!"
+                android:summaryOff="You are alone :("
+                android:title="SitcomLan"
+                android:defaultValue="false"
+                android:disableDependentsState="false">
+        </SwitchPreference>
+        <CheckBoxPreference
+                android:key="checkbox_master_key"
+                android:icon="@drawable/ic_shake"
+                android:summaryOn="Now you are master"
+                android:summaryOff="Now you are slaver"
+                android:dependency="switch_bluetooth_key"
+                android:title="Become a master"
+                android:disableDependentsState="false">
+        </CheckBoxPreference>
+        <!--<EditTextPreference-->
+                <!--android:key="name_bluetooth"-->
+                <!--android:summary="Edit your name"-->
+                <!--android:title="Device name"-->
+                <!--android:dependency="switch_bluetooth_key">-->
+        <!--</EditTextPreference>-->
+        <!--<ListPreference-->
+                <!--android:key="list2"-->
+                <!--android:summary="Choose device"-->
+                <!--android:title="Available devices"-->
+                <!--android:dependency="switch_bluetooth_key">-->
+        <!--</ListPreference>-->
+    </PreferenceCategory>
+
+    <!--<PreferenceCategory-->
+            <!--android:title="WiFi">-->
+        <!--<SwitchPreference-->
+                <!--android:switchTextOn="ON"-->
+                <!--android:switchTextOff="OFF"-->
+                <!--android:key="switch_wifi_key"-->
+                <!--android:icon="@drawable/ic_wifi_1"-->
+                <!--android:summaryOn="Searching sitcom-slaves..."-->
+                <!--android:summaryOff="You are alone :("-->
+                <!--android:title="SitcomFi"-->
+                <!--android:defaultValue="false"-->
+                <!--android:disableDependentsState="false">-->
+        <!--</SwitchPreference>-->
+        <!--<PreferenceScreen-->
+                <!--android:summary="finding..."-->
+                <!--android:title="Current State"-->
+                <!--android:dependency="switch_wifi_key">-->
+        <!--</PreferenceScreen>-->
+    <!--</PreferenceCategory>-->
+</PreferenceScreen>

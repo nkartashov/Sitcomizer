@@ -12,12 +12,16 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:text="New Button"
-                android:id="@+id/up_left_button" android:layout_weight="1"/>
+
+                android:id="@+id/up_left_button" android:layout_weight="1"
+                android:background="@android:color/holo_red_dark"/>
+
         <Button
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:text="New Button"
-                android:id="@+id/up_right_button" android:layout_weight="1"/>
+                android:id="@+id/up_right_button" android:layout_weight="1"
+                android:background="@android:color/holo_green_light"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
@@ -27,7 +31,9 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:text="New Button"
-                android:id="@+id/central_button"/>
+                android:id="@+id/central_button"
+                android:background="@android:color/holo_red_light"
+                />
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
@@ -37,11 +43,13 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:text="New Button"
-                android:id="@+id/bottom_left_button" android:layout_weight="1"/>
+                android:id="@+id/bottom_left_button" android:layout_weight="1"
+                android:background="@android:color/holo_green_dark"/>
         <Button
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:text="New Button"
-                android:id="@+id/bottom_right_button" android:layout_weight="1"/>
+                android:id="@+id/bottom_right_button" android:layout_weight="1"
+                android:background="@android:color/holo_orange_dark"/>
     </LinearLayout>
 </LinearLayout>

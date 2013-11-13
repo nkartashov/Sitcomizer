@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+        xmlns:android="http://schemas.android.com/apk/res/android">
+        <SwitchPreference
+                android:switchTextOn="ON"
+                android:switchTextOff="OFF"
+                android:key="switch_main_key"
+                android:icon="@drawable/ic_use_gesture"
+                android:summaryOn="Activate"
+                android:summaryOff="Deactivate"
+                android:title="Use Gesture"
+                android:defaultValue="false"
+                android:disableDependentsState="false">
+        </SwitchPreference>
+        <SwitchPreference
+                android:switchTextOn="ON"
+                android:switchTextOff="OFF"
+                android:key="switch_passive_key"
+                android:icon="@drawable/ic_passive_mode"
+                android:summaryOn="Activate"
+                android:summaryOff="Deactivate"
+                android:title="Passive mode"
+                android:dependency="switch_main_key"
+                android:disableDependentsState="false"
+                android:defaultValue="false">
+
+        </SwitchPreference>
+
+        <PreferenceScreen
+                android:key="pref_extend"
+                android:fragment="AU.MightyFour.Sitcomizer.GestureSettingsFragment"
+                android:summary="Choose your gesture..."
+                android:title="Extended settings"
+                android:dependency="switch_main_key">
+        </PreferenceScreen>
+
+</PreferenceScreen>

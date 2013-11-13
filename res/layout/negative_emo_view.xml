@@ -13,12 +13,14 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:text="New Button"
-                android:id="@+id/up_left_button" android:layout_weight="1"/>
+                android:id="@+id/up_left_button" android:layout_weight="1"
+                android:background="@android:color/holo_purple"/>
         <Button
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:text="New Button"
-                android:id="@+id/up_right_button" android:layout_weight="1"/>
+                android:id="@+id/up_right_button" android:layout_weight="1"
+                android:background="@android:color/holo_blue_dark"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
@@ -28,11 +30,14 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:text="New Button"
-                android:id="@+id/bottom_left_button" android:layout_weight="1"/>
+                android:id="@+id/bottom_left_button" android:layout_weight="1"
+                android:background="@android:color/holo_blue_bright"/>
         <Button
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:text="New Button"
-                android:id="@+id/bottom_right_button" android:layout_weight="1"/>
+                android:id="@+id/bottom_right_button" android:layout_weight="1"
+                android:background="@android:color/holo_purple"/>
+
     </LinearLayout>
 </LinearLayout>
