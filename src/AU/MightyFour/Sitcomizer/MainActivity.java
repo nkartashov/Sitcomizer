@@ -51,16 +51,11 @@ public class MainActivity extends Activity
         page = inflatePositiveEmotionsPage();
         pages.add (page);
 
-        //BT test page
-        page = inflater.inflate(R.layout.negative_emo_view, null);
-        Button slaveButton = (Button) page.findViewById(R.id.up_left_button);
-        slaveButton.setText("Become slave");
-        slaveButton.setOnClickListener(new OnBecomeSlaveClickHandler(MainActivity.this));
+        page = inflateStarWarsEmotionPage();
+        pages.add (page);
 
-        Button masterButton = (Button) page.findViewById(R.id.up_right_button);
-        masterButton.setText("Become Master");
-        masterButton.setOnClickListener(new OnBecomeMasterClickHandler(MainActivity.this));
-        pages.add(page);
+
+
 
         CustomPagerAdapter pagerAdapter = new CustomPagerAdapter(pages);
         ViewPager viewPager = new ViewPager(this);
@@ -216,12 +211,11 @@ public class MainActivity extends Activity
 	{
 		LayoutInflater inflater = LayoutInflater.from (this);
 		View result = inflater.inflate(R.layout.positive_emo_view, null);
-		inflateButton(result, R.id.central_button, "Laugh", R.raw.pos_laugh);
-		inflateButton(result, R.id.up_left_button, "Cheer", R.raw.pos_cheer);
-		inflateButton(result, R.id.up_right_button, "Aww", R.raw.pos_aww);
-		inflateButton(result, R.id.bottom_left_button, "Applause", R.raw.pos_applause);
-		inflateButton(result, R.id.bottom_right_button, "Yeah, baby!", R.raw.pos_yeah_baby);
-
+		inflateButton(result, R.id.central_button, "LAUGH", R.raw.pos_laugh);
+		inflateButton(result, R.id.up_left_button, "CHEER", R.raw.pos_cheer);
+		inflateButton(result, R.id.up_right_button, "AWW", R.raw.pos_aww);
+		inflateButton(result, R.id.bottom_left_button, "APPLAUSE", R.raw.pos_applause);
+		inflateButton(result, R.id.bottom_right_button, "YEAH, BABY!", R.raw.pos_yeah_baby);
 
 		return result;
 	}
@@ -230,13 +224,25 @@ public class MainActivity extends Activity
 	{
 		LayoutInflater inflater = LayoutInflater.from (this);
 		View result = inflater.inflate(R.layout.negative_emo_view, null);
-		inflateButton(result, R.id.up_left_button, "Boo", R.raw.neg_boo);
-		inflateButton(result, R.id.up_right_button, "Sad trombone", R.raw.neg_wah_wah);
-		inflateButton(result, R.id.bottom_left_button, "Shocked", R.raw.neg_shocked);
-		inflateButton(result, R.id.bottom_right_button, "Ba dum tss", R.raw.snd_ba_dum_tss);
+		inflateButton(result, R.id.up_left_button, "BOO", R.raw.neg_boo);
+		inflateButton(result, R.id.up_right_button, "SAD TROMBONE", R.raw.neg_wah_wah);
+		inflateButton(result, R.id.bottom_left_button, "SHOCKED", R.raw.neg_shocked);
+		inflateButton(result, R.id.bottom_right_button, "BA DUM TSS", R.raw.snd_ba_dum_tss);
 
 		return result;
 	}
+
+    private View inflateStarWarsEmotionPage()
+    {
+        LayoutInflater inflater = LayoutInflater.from (this);
+        View result = inflater.inflate(R.layout.starwars_emo_view, null);
+        inflateButton(result, R.id.up_left_button, "CHUBAKKA RAWRR", R.raw.lin_chubakka_rawrr);
+        inflateButton(result, R.id.up_right_button, "DARTH VADER", R.raw.lin_darth_vader_dont_make_me_destroy_you);
+        inflateButton(result, R.id.bottom_left_button, "YES, MY MASTER", R.raw.lin_darth_vader_yes_my_master);
+        inflateButton(result, R.id.bottom_right_button, "I'L BE BACK", R.raw.movie_ilbeback);
+
+        return result;
+    }
 
 	private void inflateButton(View page, int buttonId, String text, final int soundFileId)
 	{
