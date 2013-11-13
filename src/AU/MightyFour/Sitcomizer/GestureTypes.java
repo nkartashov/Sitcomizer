@@ -12,5 +12,5 @@ public class GestureTypes
 	public static final int WINNER_GESTURE = 0;
 	public static final int SHAKE_GESTURE = 1;
 	public static final int TILT_LEFT_GESTURE = 2;
-	public static final int TILT_RIGHT_GESTURE = 2;
+	public static final int TILT_RIGHT_GESTURE = 3;
 }

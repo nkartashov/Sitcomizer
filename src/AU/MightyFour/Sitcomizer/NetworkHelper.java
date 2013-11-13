@@ -46,7 +46,8 @@ public class NetworkHelper {
     }
 
     public static void UnregisterReceiver() {
-        _activityReceiverBoundTo.unregisterReceiver(_applicationsBluetoothBroadcastReceiver);
+        if (_activityReceiverBoundTo != null)
+	        _activityReceiverBoundTo.unregisterReceiver(_applicationsBluetoothBroadcastReceiver);
     }
 
     private static List<BluetoothSocket> _slavesSocketsList = new ArrayList<BluetoothSocket>();
