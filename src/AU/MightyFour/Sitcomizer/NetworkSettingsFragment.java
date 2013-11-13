@@ -23,7 +23,9 @@ public class NetworkSettingsFragment extends PreferenceFragment implements Share
 
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-//        Preference pref = findPreference(key);
-//        if (key.equals(""))
+        Preference pref = findPreference(key);
+        if (key.equals("switch_bluetooth_key")) {
+            SwitchPreference switch_bluetooth = (SwitchPreference) pref;
+        }
     }
 }

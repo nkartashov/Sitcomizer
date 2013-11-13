@@ -120,12 +120,18 @@ public class MainActivity extends Activity
     private void setGestureSettings()
     {
         USE_GESTURE = sp.getBoolean("switch_main_key", false);
+        Log.v(TAG, "USE_GESTURE " + String.valueOf(USE_GESTURE));
         USE_GESTURE_PASSIVE = sp.getBoolean("switch_passive_key", false);
+        Log.v(TAG, "USE_GESTURE_PASSIVE " + String.valueOf(USE_GESTURE_PASSIVE));
 
         USE_SHAKE = sp.getBoolean("checkbox_shake_key", false);
+        Log.v(TAG, "USE_SHAKE " + String.valueOf(USE_SHAKE));
         USE_WINNER = sp.getBoolean("checkbox_winner_key", false);
+        Log.v(TAG, "USE_WINNER " + String.valueOf(USE_WINNER));
         USE_TILT_LEFT = sp.getBoolean("checkbox_tilt_left_key", false);
+        Log.v(TAG, "USE_TILT_LEFT " + String.valueOf(USE_TILT_LEFT));
         USE_TILT_RIGHT = sp.getBoolean("checkbox_tilt_right_key", false);
+        Log.v(TAG, "USE_TOLT_RIGHT " + String.valueOf(USE_TILT_RIGHT));
 
 
         try {
