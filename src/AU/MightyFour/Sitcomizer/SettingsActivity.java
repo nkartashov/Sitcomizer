@@ -28,7 +28,7 @@ public class SettingsActivity extends PreferenceActivity  {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    //PreferenceManager.setDefaultValues(this, R.xml.pref_gesture, false);
+
     }
 
 

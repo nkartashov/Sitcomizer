@@ -2,41 +2,75 @@
 <PreferenceScreen
         xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
-            android:title="SHAKE"
-            android:icon="@drawable/ic_shake" >
-        <SwitchPreference
-            android:key="switch_shake_key"
-            android:summary="@string/switch_shake_summary"
-            android:title="@string/switch_shake_title"
+            android:title="SHAKE">
+        <CheckBoxPreference
+            android:key="checkbox_shake_key"
+            android:icon="@drawable/ic_shake"
+            android:summaryOn="Enabled"
+            android:summaryOff="Disabled"
+            android:title="Use shake gesture"
             android:disableDependentsState="false">
-        </SwitchPreference>
-
+        </CheckBoxPreference>
         <ListPreference
-            android:entries="@array/sounds"
-            android:entryValues="@array/sounds_values"
-            android:dependency="switch_shake_key"
-            android:summary="Choose sound"
+            android:dependency="checkbox_shake_key"
             android:key="list_shake_key"
-            android:title="@string/list_shake_title">
+            android:title="Sound"
+            android:icon="@drawable/ic_music">
         </ListPreference>
     </PreferenceCategory>
 
     <PreferenceCategory
             android:title="WINNER">
-        <SwitchPreference
-                android:id="@+id/switch_winner"
-                android:key="switch_winner_key"
-                android:summary="@string/switch_winner_summary"
-                android:title="@string/switch_winner_title"
-                android:disableDependentsState="false" >
-        </SwitchPreference>
+        <CheckBoxPreference
+                android:key="checkbox_winner_key"
+                android:icon="@drawable/ic_winner"
+                android:summaryOn="Enabled"
+                android:summaryOff="Disabled"
+                android:title="Use winner gesture"
+                android:disableDependentsState="false">
+        </CheckBoxPreference>
         <ListPreference
-                android:entries="@array/sounds"
-                android:entryValues="@array/sounds_values"
+                android:dependency="checkbox_winner_key"
                 android:key="list_winner_key"
-                android:dependency="switch_winner_key"
-                android:summary="Choose sound"
-                android:title="@string/list_winner_title">
+                android:title="Sound"
+                android:icon="@drawable/ic_music">
+        </ListPreference>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            android:title="TILT-LEFT">
+        <CheckBoxPreference
+                android:key="checkbox_tilt_left_key"
+                android:icon="@drawable/ic_tilt_left"
+                android:summaryOn="Enabled"
+                android:summaryOff="Disabled"
+                android:title="Use tilt-left gesture"
+                android:disableDependentsState="false">
+        </CheckBoxPreference>
+        <ListPreference
+                android:dependency="checkbox_tilt_left_key"
+                android:key="list_tilt_left_key"
+                android:title="Sound"
+                android:icon="@drawable/ic_music">
+        </ListPreference>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+            android:title="TILT-RIGHT">
+        <CheckBoxPreference
+                android:key="checkbox_tilt_right_key"
+                android:icon="@drawable/ic_tilt_right"
+                android:summaryOn="Enabled"
+                android:summaryOff="Disabled"
+                android:title="Use tilt-right gesture"
+                android:disableDependentsState="false">
+        </CheckBoxPreference>
+        <ListPreference
+                android:dependency="checkbox_tilt_right_key"
+                android:key="list_tilt_right_key"
+                android:title="Sound"
+                android:icon="@drawable/ic_music">
+
         </ListPreference>
     </PreferenceCategory>
 

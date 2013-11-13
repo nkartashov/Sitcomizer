@@ -2,7 +2,7 @@
 <preference-headers
         xmlns:android="http://schemas.android.com/apk/res/android">
     <header
-            android:fragment="AU.MightyFour.Sitcomizer.GestureSettingsFragment"
+            android:fragment="AU.MightyFour.Sitcomizer.GestureSettingsMainFragment"
             android:icon="@drawable/ic_gesture"
             android:summary="@string/header1_summary"
             android:title="@string/header1_title">

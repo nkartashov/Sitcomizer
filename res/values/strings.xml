@@ -3,55 +3,9 @@
     <string name="app_name">Sitcomizer</string>
     <string name="menu_settings">Settings</string>
     <string name="settings_name">Settings</string>
+
     <string name="menu_help">Help</string>
-
-    <string name="pref_summary_use_gesture">Use gesture for activate emotion</string>
-    <string name="pref_title_use_gesture">Use gesture</string>
-    <string name="pref_gesture_title">GESTURE</string>
-    <string name="pref_summary_choose_music">Choose special music</string>
-    <string name="pref_title_choose_music">Music</string>
-
-    <!-- Gesture_shake -->
-    <string name="switch_shake_summary">Use shake</string>
-    <string name="switch_shake_title">Shake</string>
-    <string name="list_shake_title">Sound</string>
-    <string name="list_shake_summary">Choose sound</string>
-    <!-- Gesture_winner-->
-    <string name="switch_winner_summary">Use winner action</string>
-    <string name="switch_winner_title">Winner</string>
-    <string name="list_winner_title">Sound</string>
-    <string name="list_winner_summary">Choose sound</string>
-
-    <string-array name="sounds">
-        <item>neg_boo</item>
-        <item>neg_crickets</item>
-        <item>neg_shocked</item>
-        <item>neg_wah_wah</item>
-
-        </string-array>
-
-    <string-array name="sounds_values">
-        <item>neg_boo</item>
-        <item>neg_crickets</item>
-        <item>neg_shocked</item>
-        <item>neg_wah_wah</item>
-    </string-array>
-
-    <string name="checkbox2_title">CheckBox 2</string>
-    <string name="checkbox2_summary">Summary of CheckBox 2</string>
-    <string name="edittext2_title">EditText 2</string>
-    <string name="edittext2_summary">Summary of EditText 2</string>
-    <string name="list2_title">List 2</string>
-    <string name="list2_summary">Summary of List 2</string>
-
-    <string name="category1">Category 1</string>
-    <string name="category2">Category 2</string>
-
-
-    <string name="screen1_title">Screen 1</string>
-    <string name="screen1_summary">Summary of Screen 1</string>
-    <string name="screen2_title">Screen 2</string>
-    <string name="screen2_summary">Summary of Screen 2</string>
+    <string name="help_text">Sitcomizer.Alpha-version</string>
 
 
     <string name="header1_title">Gestures</string>

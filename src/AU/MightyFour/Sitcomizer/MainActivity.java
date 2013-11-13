@@ -18,15 +18,26 @@ import java.util.List;
 
 public class MainActivity extends Activity
 {
-    private int rawOnShake;
+    private int RAW_ON_SHAKE;
+    private int RAW_ON_WINNER;
+    private int RAW_ON_TILT_LEFT;
+    private int RAW_ON_TILT_RIGHT;
+
+    private boolean USE_GESTURE;
+    private boolean USE_GESTURE_PASSIVE;
+
+    private boolean USE_SHAKE;
+    private boolean USE_WINNER;
+    private boolean USE_TILT_LEFT;
+    private boolean USE_TILT_RIGHT;
+
     private SharedPreferences sp;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        rawOnShake = R.raw.neg_wah_wah;
-        sp = PreferenceManager.getDefaultSharedPreferences(this);
+        initSettings();
 
         LayoutInflater inflater = LayoutInflater.from (this);
         List<View> pages = new ArrayList<View>();
@@ -57,6 +68,7 @@ public class MainActivity extends Activity
 	{
 		_gestureEventListener.setInactive();
 		super.onPause();
+
 	}
 
 	@Override
@@ -65,16 +77,7 @@ public class MainActivity extends Activity
 		super.onResume();
 		_gestureEventListener.setActive();
 
-        String raw_name = sp.getString("list_shake_key", "neg_wah_wah");
-        Log.v(TAG, raw_name);
-
-        try {
-            rawOnShake = R.raw.class.getField(raw_name).getInt(R.raw.class.getField(raw_name));
-            Log.v(TAG, String.valueOf(rawOnShake));
-            _gestureEventListener.addHandler(GestureTypes.SHAKE_GESTURE, rawOnShake);
-        }
-        catch (Exception e)
-        {}
+        setGestureSettings();
 
 	}
 
@@ -91,14 +94,60 @@ public class MainActivity extends Activity
     {
         switch (item.getItemId()) {
             case R.id.menu_settings:
-                Intent intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
+                Intent intent_settings = new Intent(this, SettingsActivity.class);
+                startActivity(intent_settings);
                 return true;
             case R.id.menu_help:
+                Intent intent_help = new Intent(this, HelpActivity.class);
+                startActivity(intent_help);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void initSettings()
+    {
+        PreferenceManager.setDefaultValues(this, R.xml.pref_main_gesture, false);
+        PreferenceManager.setDefaultValues(this, R.xml.pref_gesture, false);
+        PreferenceManager.setDefaultValues(this, R.xml.pref_network, false);
+        PreferenceManager.setDefaultValues(this, R.xml.pref_alarm, false);
+
+        sp = PreferenceManager.getDefaultSharedPreferences(this);
+    }
+
+    private void setGestureSettings()
+    {
+        USE_GESTURE = sp.getBoolean("switch_main_key", false);
+        USE_GESTURE_PASSIVE = sp.getBoolean("switch_passive_key", false);
+
+        USE_SHAKE = sp.getBoolean("checkbox_shake_key", false);
+        USE_WINNER = sp.getBoolean("checkbox_winner_key", false);
+        USE_TILT_LEFT = sp.getBoolean("checkbox_tilt_left_key", false);
+        USE_TILT_RIGHT = sp.getBoolean("checkbox_tilt_right_key", false);
+
+
+        try {
+            RAW_ON_SHAKE = R.raw.class.getField(sp.getString("list_shake_key", "pos_applause"))
+                    .getInt(R.raw.class.getField(sp.getString("list_shake_key", "pos_applause")));
+
+            RAW_ON_WINNER = R.raw.class.getField(sp.getString("list_winner_key", "pos_applause"))
+                    .getInt(R.raw.class.getField(sp.getString("list_winner_key", "pos_applause")));
+
+            RAW_ON_TILT_LEFT = R.raw.class.getField(sp.getString("list_tilt_left_key", "pos_applause"))
+                    .getInt(R.raw.class.getField(sp.getString("list_tilt_left_key", "pos_applause")));
+
+            RAW_ON_TILT_RIGHT = R.raw.class.getField(sp.getString("list_tilt_right_key", "pos_applause"))
+                    .getInt(R.raw.class.getField(sp.getString("list_tilt_right_key", "pos_applause")));
+
+            //Log.v(TAG, String.valueOf(RAW_ON_SHAKE));
+
+            _gestureEventListener.addHandler(GestureTypes.SHAKE_GESTURE, RAW_ON_SHAKE);
+            _gestureEventListener.addHandler(GestureTypes.WINNER_GESTURE, RAW_ON_WINNER);
+            _gestureEventListener.addHandler(GestureTypes.TILT_LEFT_GESTURE, RAW_ON_TILT_LEFT);
+            _gestureEventListener.addHandler(GestureTypes.TILT_RIGHT_GESTURE, RAW_ON_TILT_RIGHT);
+        }
+        catch (Exception e) {}
     }
 
 	private void setGestureEventListener()
@@ -133,6 +182,7 @@ public class MainActivity extends Activity
 		inflateButton(result, R.id.up_right_button, "Aww", R.raw.pos_aww);
 		inflateButton(result, R.id.bottom_left_button, "Applause", R.raw.pos_applause);
 		inflateButton(result, R.id.bottom_right_button, "Yeah, baby!", R.raw.pos_yeah_baby);
+
 
 		return result;
 	}
