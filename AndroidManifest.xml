@@ -30,5 +30,11 @@
                   >
         </activity>
 
+        <receiver android:name=".BTBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.bluetooth.device.action.FOUND"/>
+            </intent-filter>
+        </receiver>
+
     </application>
 </manifest>

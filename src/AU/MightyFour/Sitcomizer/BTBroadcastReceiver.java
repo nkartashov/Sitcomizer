@@ -1,4 +1,4 @@
-package com.example.FromChat;
+package AU.MightyFour.Sitcomizer;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -22,11 +22,11 @@ public class BTBroadcastReceiver extends BroadcastReceiver {
 
         if (BluetoothDevice.ACTION_FOUND.equals(action)) {
             BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-            Log.d(MyActivity.TAG, "Device found: " + device.getName());
+            Log.d(MainActivity.TAG, "Device found: " + device.getName());
             String deviceName = device.getName();
-            if(deviceName.endsWith(MyActivity.SUFFIX)) {
-                MyActivity.discoveredDevices.add(device);
-                Log.d(MyActivity.TAG, "Device added: " + device.getName());
+            if(deviceName.endsWith(MainActivity.SUFFIX)) {
+                MainActivity.discoveredDevices.add(device);
+                Log.d(MainActivity.TAG, "Device added: " + device.getName());
             }
         }
     }
