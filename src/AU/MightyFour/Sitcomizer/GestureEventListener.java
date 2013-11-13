@@ -37,6 +37,11 @@ public class GestureEventListener
 		_isActive = false;
 	}
 
+	public void setGesturesOnState(boolean state)
+	{
+		_isActive = state;
+	}
+
 	public SensorEventListener accelerationEventListener()
 	{
 		return _accelerationEventListener;

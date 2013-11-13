@@ -66,7 +66,8 @@ public class MainActivity extends Activity
 	@Override
 	public void onPause()
 	{
-		_gestureEventListener.setInactive();
+		if (!USE_GESTURE_PASSIVE)
+			_gestureEventListener.setInactive();
 		super.onPause();
 
 	}
@@ -75,10 +76,10 @@ public class MainActivity extends Activity
 	public void onResume()
 	{
 		super.onResume();
-		_gestureEventListener.setActive();
 
-        setGestureSettings();
+		setGestureSettings();
 
+		_gestureEventListener.setGesturesOnState(USE_GESTURE);
 	}
 
     @Override
