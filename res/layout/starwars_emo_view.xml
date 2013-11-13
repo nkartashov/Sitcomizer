@@ -14,13 +14,13 @@
                 android:layout_height="fill_parent"
                 android:text="New Button"
                 android:id="@+id/up_left_button" android:layout_weight="1"
-                android:background="#ffe600" android:textColor="#000000" android:textStyle="bold"/>
+                android:background="@drawable/my_button_sw_hl" android:textColor="#000000" android:textStyle="bold"/>
         <Button
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:text="New Button"
                 android:id="@+id/up_right_button" android:layout_weight="1"
-                android:background="#000000" android:textColor="#ffffff"
+                android:background="@drawable/my_button_sw_hr" android:textColor="#ffffff"
                 android:textStyle="bold"/>
     </LinearLayout>
     <LinearLayout
@@ -32,13 +32,13 @@
                 android:layout_height="fill_parent"
                 android:text="New Button"
                 android:id="@+id/bottom_left_button" android:layout_weight="1"
-                android:background="#ffffff" android:textStyle="bold" android:textColor="#000000"/>
+                android:background="@drawable/my_button_sw_dl" android:textStyle="bold" android:textColor="#000000"/>
         <Button
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:text="New Button"
                 android:id="@+id/bottom_right_button" android:layout_weight="1"
-                android:background="#ff0200" android:textStyle="bold"/>
+                android:background="@drawable/my_button_sw_dr" android:textStyle="bold"/>
 
     </LinearLayout>
 </LinearLayout>
