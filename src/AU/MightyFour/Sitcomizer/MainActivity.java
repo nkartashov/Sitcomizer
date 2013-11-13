@@ -31,6 +31,9 @@ public class MainActivity extends Activity
     private boolean USE_TILT_LEFT;
     private boolean USE_TILT_RIGHT;
 
+    private boolean USE_BLUETOOTH;
+    private boolean IS_MASTER;
+
     private SharedPreferences sp;
 
     @Override
@@ -149,6 +152,16 @@ public class MainActivity extends Activity
         Log.v(TAG, "USE_TILT_LEFT " + String.valueOf(USE_TILT_LEFT));
         USE_TILT_RIGHT = sp.getBoolean("checkbox_tilt_right_key", false);
         Log.v(TAG, "USE_TILT_RIGHT " + String.valueOf(USE_TILT_RIGHT));
+
+        USE_BLUETOOTH = sp.getBoolean("switch_bluetooth_key", false);
+        Log.v(TAG, "USE_BLUETOOTH " + String.valueOf(USE_BLUETOOTH));
+        if (sp.getString("list_roles_key", "MASTER").equals("MASTER")) {
+            IS_MASTER = true;
+        }
+        else {
+            IS_MASTER = false;
+        }
+        Log.v(TAG, "IS_MASTER " + String.valueOf(IS_MASTER));
 
 
         try {
