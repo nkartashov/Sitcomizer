@@ -16,6 +16,7 @@ import java.lang.reflect.Field;
  * To change this template use File | Settings | File Templates.
  */
 public class GestureSettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

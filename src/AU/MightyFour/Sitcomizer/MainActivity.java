@@ -131,7 +131,7 @@ public class MainActivity extends Activity
         USE_TILT_LEFT = sp.getBoolean("checkbox_tilt_left_key", false);
         Log.v(TAG, "USE_TILT_LEFT " + String.valueOf(USE_TILT_LEFT));
         USE_TILT_RIGHT = sp.getBoolean("checkbox_tilt_right_key", false);
-        Log.v(TAG, "USE_TOLT_RIGHT " + String.valueOf(USE_TILT_RIGHT));
+        Log.v(TAG, "USE_TILT_RIGHT " + String.valueOf(USE_TILT_RIGHT));
 
 
         try {
