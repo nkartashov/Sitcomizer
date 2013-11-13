@@ -47,7 +47,8 @@
                 android:layout_height="fill_parent"
                 android:text="New Button"
                 android:id="@+id/bottom_right_button" android:layout_weight="1"
-                android:background="@drawable/my_button_sw_dr" android:textStyle="bold"/>
+                android:background="@drawable/my_button_sw_dr" android:textStyle="bold"
+                android:textColor="#000000"/>
 
     </LinearLayout>
 </LinearLayout>
