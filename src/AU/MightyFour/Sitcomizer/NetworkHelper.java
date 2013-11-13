@@ -1,6 +1,8 @@
 package AU.MightyFour.Sitcomizer;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothSocket;
+import android.content.BroadcastReceiver;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -38,7 +40,18 @@ public class NetworkHelper {
         }
     }
 
+    public static void SetBroadcastReceiverContext(BroadcastReceiver receiver, Activity receiversActivity) {
+        _applicationsBluetoothBroadcastReceiver = receiver;
+        _activityReceiverBoundTo = receiversActivity;
+    }
+
+    public static void UnregisterReceiver() {
+        _activityReceiverBoundTo.unregisterReceiver(_applicationsBluetoothBroadcastReceiver);
+    }
+
     private static List<BluetoothSocket> _slavesSocketsList = new ArrayList<BluetoothSocket>();
     private static BluetoothSocket _masterSocket;
     private static final String TAG = "NetworkHelper";
+    private static BroadcastReceiver _applicationsBluetoothBroadcastReceiver;
+    private static Activity _activityReceiverBoundTo;
 }

@@ -48,6 +48,17 @@ public class MainActivity extends Activity
         page = inflatePositiveEmotionsPage();
         pages.add (page);
 
+        //BT test page
+        page = inflater.inflate(R.layout.negative_emo_view, null);
+        Button slaveButton = (Button) page.findViewById(R.id.up_left_button);
+        slaveButton.setText("Become slave");
+        slaveButton.setOnClickListener(new OnBecomeSlaveClickHandler(MainActivity.this));
+
+        Button masterButton = (Button) page.findViewById(R.id.up_right_button);
+        masterButton.setText("Become Master");
+        masterButton.setOnClickListener(new OnBecomeMasterClickHandler(MainActivity.this));
+        pages.add(page);
+
         CustomPagerAdapter pagerAdapter = new CustomPagerAdapter(pages);
         ViewPager viewPager = new ViewPager(this);
         viewPager.setAdapter(pagerAdapter);
@@ -81,6 +92,12 @@ public class MainActivity extends Activity
 
 		_gestureEventListener.setGesturesOnState(USE_GESTURE);
 	}
+
+    @Override
+    protected void onDestroy() {
+        NetworkHelper.CloseAllSockets();
+        NetworkHelper.UnregisterReceiver();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
