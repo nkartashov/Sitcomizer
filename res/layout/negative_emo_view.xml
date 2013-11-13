@@ -8,36 +8,38 @@
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" android:layout_weight="1">
+            android:layout_height="fill_parent" android:layout_weight="1"
+            android:background="#449def">
         <Button
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:text="New Button"
                 android:id="@+id/up_left_button" android:layout_weight="1"
-                android:background="@android:color/holo_purple"/>
+                android:background="@drawable/my_button_sad_hl"/>
         <Button
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:text="New Button"
                 android:id="@+id/up_right_button" android:layout_weight="1"
-                android:background="@android:color/holo_blue_dark"/>
+                android:background="@drawable/my_button_sad_hr"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" android:layout_weight="1">
+            android:layout_height="fill_parent" android:layout_weight="1" android:baselineAligned="true"
+            android:background="#449def">
         <Button
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:text="New Button"
                 android:id="@+id/bottom_left_button" android:layout_weight="1"
-                android:background="@android:color/holo_blue_bright"/>
+                android:background="@drawable/my_button_sad_dl"/>
         <Button
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:text="New Button"
                 android:id="@+id/bottom_right_button" android:layout_weight="1"
-                android:background="@android:color/holo_purple"/>
+                android:background="@drawable/my_button_sad_dr"/>
 
     </LinearLayout>
 </LinearLayout>
