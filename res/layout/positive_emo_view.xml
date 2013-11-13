@@ -14,14 +14,16 @@
                 android:text="New Button"
 
                 android:id="@+id/up_left_button" android:layout_weight="1"
-                android:background="@android:color/holo_red_dark"/>
+                android:background="@drawable/my_button_fun_hl" android:textColor="@android:color/white"
+                android:textStyle="bold"/>
 
         <Button
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:text="New Button"
                 android:id="@+id/up_right_button" android:layout_weight="1"
-                android:background="@android:color/holo_green_light"/>
+                android:background="@drawable/my_button_fun_hr" android:textColor="@android:color/white"
+                android:textStyle="bold"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
@@ -32,8 +34,8 @@
                 android:layout_height="fill_parent"
                 android:text="New Button"
                 android:id="@+id/central_button"
-                android:background="@android:color/holo_red_light"
-                />
+                android:background="@drawable/my_button_fun_c"
+                android:textColor="@android:color/white" android:textStyle="bold"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
@@ -44,12 +46,14 @@
                 android:layout_height="fill_parent"
                 android:text="New Button"
                 android:id="@+id/bottom_left_button" android:layout_weight="1"
-                android:background="@android:color/holo_green_dark"/>
+                android:background="@drawable/my_button_fun_dl" android:textColor="@android:color/white"
+                android:textStyle="bold"/>
         <Button
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:text="New Button"
                 android:id="@+id/bottom_right_button" android:layout_weight="1"
-                android:background="@android:color/holo_orange_dark"/>
+                android:background="@drawable/my_button_fun_dr" android:textColor="@android:color/white"
+                android:textStyle="bold"/>
     </LinearLayout>
 </LinearLayout>
