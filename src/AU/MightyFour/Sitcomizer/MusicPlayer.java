@@ -31,7 +31,6 @@ public class MusicPlayer
 				player.release();
 			}
 		});
-
 	}
 
 	private static Activity _playerActivity;

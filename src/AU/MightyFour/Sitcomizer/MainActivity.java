@@ -186,14 +186,14 @@ public class MainActivity extends Activity
 		if (gestureState)
 			_gestureEventListener.addHandler(gesture, handler);
 		else
-			_gestureEventListener.removeGestureHandler(gesture);
+			_gestureEventListener.addHandler(gesture, null);
 	}
 
 	private void setGestureEventListener()
 	{
 		_gestureEventListener = new GestureEventListener();
 
-		_gestureEventListener.setActive();
+		_gestureEventListener.setInactive();
 
 		SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 		sensorManager.registerListener(

@@ -27,27 +27,18 @@ public class GestureEventListener
 
 	public void setActive()
 	{
-		Log.v(TAG, "set to active");
-		_isActive = true;
+		setGesturesOnState(true);
 	}
 
 	public void setInactive()
 	{
-		Log.v(TAG, "set to inactive");
-		_isActive = false;
+		setGesturesOnState(false);
 	}
 
 	public void setGesturesOnState(boolean state)
 	{
 		Log.v(TAG, "listener state set to " + String.valueOf(state));
 		_isActive = state;
-	}
-
-	public void removeGestureHandler(Integer gesture)
-	{
-		Log.v(TAG, "gesture removed " + String.valueOf(gesture));
-		if (_handlers.get(gesture) != null)
-			_handlers.remove(gesture);
 	}
 
 	public SensorEventListener accelerationEventListener()
@@ -75,6 +66,8 @@ public class GestureEventListener
 		Integer handler = _handlers.get(event);
 		if (handler != null)
 			MusicPlayer.createAndLaunchPlayer(handler);
+		else
+			Log.d(TAG, "gesture left unhandled for event " + String.valueOf(event));
 	}
 
 	private SensorEventListener _accelerationEventListener = new SensorEventListener()
@@ -138,7 +131,7 @@ public class GestureEventListener
 
 		private boolean _firstUpdateHappened = false;
 
-		private final double BORDER_SHAKE_ACCELERATION = 11;
+		private final double BORDER_SHAKE_ACCELERATION = 14;
 		private final double BORDER_WINNER_ACCELERATION = 11;
 
 		private final String TAG = "ShakeEventListener";
