@@ -7,7 +7,6 @@ import android.util.Log;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.UUID;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,7 +18,7 @@ import java.util.UUID;
 public class MasterThread extends Thread {
     public MasterThread(BluetoothDevice slaveDevice) {
         try {
-            _incomingConnectionsSocket = slaveDevice.createRfcommSocketToServiceRecord(BluetoothCommands.APPLICATION_UID);
+            _outgoingConnectionsSocket = slaveDevice.createRfcommSocketToServiceRecord(BluetoothCommands.APPLICATION_UID);
             Log.d(TAG, "RfcommSocket created");
         }
         catch (IOException e) {
@@ -30,13 +29,14 @@ public class MasterThread extends Thread {
     public void run() {
         try {
             Log.d(TAG, "Connecting slave...");
-            _incomingConnectionsSocket.connect();
+            _outgoingConnectionsSocket.connect();
+            NetworkHelper.AddSlaveSocketToList(_outgoingConnectionsSocket);
             Log.d(TAG, "Slave connected");
         }
         catch (IOException connectException) {
             Log.d(TAG, "exception: " + connectException.getMessage());
             try {
-                _incomingConnectionsSocket.close();
+                _outgoingConnectionsSocket.close();
             }
             catch (IOException closeException) {
                 Log.d(TAG, "exception: " + closeException.getMessage());
@@ -47,10 +47,10 @@ public class MasterThread extends Thread {
         byte[] buffer = new byte[1];
         buffer[0] = BluetoothCommands.PREPARE_FOR_INTERACTION;
         try {
-            OutputStream outStream = _incomingConnectionsSocket.getOutputStream();
+            OutputStream outStream = _outgoingConnectionsSocket.getOutputStream();
             outStream.write(buffer);
             Log.d(TAG, "PREPARE_FOR_INTERACTION sent");
-            InputStream inputStream = _incomingConnectionsSocket.getInputStream();
+            InputStream inputStream = _outgoingConnectionsSocket.getInputStream();
             Log.d(TAG, "Waiting for READY_FOR_INTERACTION...");
             try {
                 inputStream.read(buffer);
@@ -71,6 +71,6 @@ public class MasterThread extends Thread {
         }
     }
 
-    private BluetoothSocket _incomingConnectionsSocket;
+    private BluetoothSocket _outgoingConnectionsSocket;
     private final String TAG = "MasterThread";
 }

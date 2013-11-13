@@ -20,19 +20,22 @@ public class SlaveThread extends Thread {
     public SlaveThread(BluetoothAdapter slavesBluetoothAdapter) {
 
         try {
-            _outgoingConnectionSocket = slavesBluetoothAdapter.listenUsingRfcommWithServiceRecord(serviceName,
+            _incomingConnectionSocket = slavesBluetoothAdapter.listenUsingRfcommWithServiceRecord(serviceName,
                     BluetoothCommands.APPLICATION_UID);
         }
         catch (IOException e) {
             Log.d(TAG, "exception: " + e.getMessage());
         }
     }
+
     public void run() {
         BluetoothSocket masterSocket = null;
         try {
             Log.d(TAG, "Accepting master...");
-            masterSocket = _outgoingConnectionSocket.accept();
+            masterSocket = _incomingConnectionSocket.accept();
+            NetworkHelper.SetMasterSocket(masterSocket);
             Log.d(TAG, "Master accepted");
+            _incomingConnectionSocket.close();
         }
         catch (IOException e) {
             Log.d(TAG, "exception: " + e.getMessage());
@@ -56,7 +59,7 @@ public class SlaveThread extends Thread {
         }
     }
     
-    private BluetoothServerSocket _outgoingConnectionSocket;
+    private BluetoothServerSocket _incomingConnectionSocket;
     private final String TAG = "SlaveThread";
     private final String serviceName = "SitcomizerSlaveNetwork";
 }

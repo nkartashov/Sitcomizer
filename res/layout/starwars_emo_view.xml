@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" android:layout_weight="1">
+        <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="New Button"
+                android:id="@+id/up_left_button" android:layout_weight="1"
+                android:background="#ffe600" android:textColor="#000000" android:textStyle="bold"/>
+        <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="New Button"
+                android:id="@+id/up_right_button" android:layout_weight="1"
+                android:background="#000000" android:textColor="#ffffff"
+                android:textStyle="bold"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" android:layout_weight="1">
+        <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="New Button"
+                android:id="@+id/bottom_left_button" android:layout_weight="1"
+                android:background="#ffffff" android:textStyle="bold" android:textColor="#000000"/>
+        <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="New Button"
+                android:id="@+id/bottom_right_button" android:layout_weight="1"
+                android:background="#ff0200" android:textStyle="bold"/>
+
+    </LinearLayout>
+</LinearLayout>

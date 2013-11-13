@@ -39,7 +39,15 @@ public class GestureEventListener
 
 	public void setGesturesOnState(boolean state)
 	{
+		Log.v(TAG, "listener state set to " + String.valueOf(state));
 		_isActive = state;
+	}
+
+	public void removeGestureHandler(Integer gesture)
+	{
+		Log.v(TAG, "gesture removed " + String.valueOf(gesture));
+		if (_handlers.get(gesture) != null)
+			_handlers.remove(gesture);
 	}
 
 	public SensorEventListener accelerationEventListener()
@@ -80,11 +88,13 @@ public class GestureEventListener
 			{
 				if (identifyUpwardGesture())
 				{
+					Log.v(TAG, "gesture happened WINNER_GESTURE");
 					handleGesture(GestureTypes.WINNER_GESTURE);
 					return;
 				}
 				if (identifyForwardGesture())
 				{
+					Log.v(TAG, "gesture happened SHAKE_GESTURE");
 					handleGesture(GestureTypes.SHAKE_GESTURE);
 				}
 			}
@@ -95,7 +105,6 @@ public class GestureEventListener
 
 		private void updateAccelerationData(SensorEvent event)
 		{
-			Log.v(TAG, "acceleration sensor value changed");
 			if (!_firstUpdateHappened)
 			{
 				for (int i = 0; i < 3; i++)
@@ -140,15 +149,16 @@ public class GestureEventListener
 		@Override
 		public void onSensorChanged(SensorEvent event)
 		{
-			Log.v(TAG, "gyroscope sensor value changed");
 			updateValues(event);
 			if (identifyLeftTilt())
 			{
+				Log.v(TAG, "gesture happened TILT_LEFT_GESTURE");
 				handleGesture(GestureTypes.TILT_LEFT_GESTURE);
 				return;
 			}
 			if (identifyRightTilt())
 			{
+				Log.v(TAG, "gesture happened TILT_RIGHT_GESTURE");
 				handleGesture(GestureTypes.TILT_RIGHT_GESTURE);
 			}
 		}

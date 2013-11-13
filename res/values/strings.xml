@@ -7,6 +7,15 @@
     <string name="menu_help">Help</string>
     <string name="help_text">Sitcomizer.Alpha-version</string>
 
+    <string-array name="roles">
+        <item>MASTER</item>
+        <item>SLAVE</item>
+    </string-array>
+    <string-array name="roles_values">
+        <item>MASTER</item>
+        <item>SLAVE</item>
+    </string-array>
+
 
     <string name="header1_title">Gestures</string>
     <string name="header1_summary">Control your gesture</string>

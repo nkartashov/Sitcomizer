@@ -31,6 +31,9 @@ public class MainActivity extends Activity
     private boolean USE_TILT_LEFT;
     private boolean USE_TILT_RIGHT;
 
+    private boolean USE_BLUETOOTH;
+    private boolean IS_MASTER;
+
     private SharedPreferences sp;
 
     @Override
@@ -47,6 +50,12 @@ public class MainActivity extends Activity
 
         page = inflatePositiveEmotionsPage();
         pages.add (page);
+
+        page = inflateStarWarsEmotionPage();
+        pages.add (page);
+
+
+
 
         CustomPagerAdapter pagerAdapter = new CustomPagerAdapter(pages);
         ViewPager viewPager = new ViewPager(this);
@@ -69,7 +78,6 @@ public class MainActivity extends Activity
 		if (!USE_GESTURE_PASSIVE)
 			_gestureEventListener.setInactive();
 		super.onPause();
-
 	}
 
 	@Override
@@ -81,6 +89,13 @@ public class MainActivity extends Activity
 
 		_gestureEventListener.setGesturesOnState(USE_GESTURE);
 	}
+
+    @Override
+    protected void onDestroy() {
+        NetworkHelper.CloseAllSockets();
+        NetworkHelper.UnregisterReceiver();
+	    super.onDestroy();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -131,7 +146,17 @@ public class MainActivity extends Activity
         USE_TILT_LEFT = sp.getBoolean("checkbox_tilt_left_key", false);
         Log.v(TAG, "USE_TILT_LEFT " + String.valueOf(USE_TILT_LEFT));
         USE_TILT_RIGHT = sp.getBoolean("checkbox_tilt_right_key", false);
-        Log.v(TAG, "USE_TOLT_RIGHT " + String.valueOf(USE_TILT_RIGHT));
+        Log.v(TAG, "USE_TILT_RIGHT " + String.valueOf(USE_TILT_RIGHT));
+
+        USE_BLUETOOTH = sp.getBoolean("switch_bluetooth_key", false);
+        Log.v(TAG, "USE_BLUETOOTH " + String.valueOf(USE_BLUETOOTH));
+        if (sp.getString("list_roles_key", "MASTER").equals("MASTER")) {
+            IS_MASTER = true;
+        }
+        else {
+            IS_MASTER = false;
+        }
+        Log.v(TAG, "IS_MASTER " + String.valueOf(IS_MASTER));
 
 
         try {
@@ -147,15 +172,22 @@ public class MainActivity extends Activity
             RAW_ON_TILT_RIGHT = R.raw.class.getField(sp.getString("list_tilt_right_key", "pos_applause"))
                     .getInt(R.raw.class.getField(sp.getString("list_tilt_right_key", "pos_applause")));
 
-            //Log.v(TAG, String.valueOf(RAW_ON_SHAKE));
 
-            _gestureEventListener.addHandler(GestureTypes.SHAKE_GESTURE, RAW_ON_SHAKE);
-            _gestureEventListener.addHandler(GestureTypes.WINNER_GESTURE, RAW_ON_WINNER);
-            _gestureEventListener.addHandler(GestureTypes.TILT_LEFT_GESTURE, RAW_ON_TILT_LEFT);
-            _gestureEventListener.addHandler(GestureTypes.TILT_RIGHT_GESTURE, RAW_ON_TILT_RIGHT);
+	        updateGestureHandler(GestureTypes.SHAKE_GESTURE, RAW_ON_SHAKE, USE_SHAKE);
+	        updateGestureHandler(GestureTypes.WINNER_GESTURE, RAW_ON_WINNER, USE_WINNER);
+	        updateGestureHandler(GestureTypes.TILT_LEFT_GESTURE, RAW_ON_TILT_LEFT, USE_TILT_LEFT);
+	        updateGestureHandler(GestureTypes.TILT_RIGHT_GESTURE, RAW_ON_TILT_RIGHT, USE_TILT_RIGHT);
         }
         catch (Exception e) {}
     }
+
+	private void updateGestureHandler(Integer gesture, Integer handler, boolean gestureState)
+	{
+		if (gestureState)
+			_gestureEventListener.addHandler(gesture, handler);
+		else
+			_gestureEventListener.removeGestureHandler(gesture);
+	}
 
 	private void setGestureEventListener()
 	{
@@ -173,23 +205,17 @@ public class MainActivity extends Activity
                 _gestureEventListener.gyroscopeEventListener(),
                 sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE),
                 SensorManager.SENSOR_DELAY_NORMAL);
-
-		_gestureEventListener.addHandler(GestureTypes.SHAKE_GESTURE, R.raw.snd_shotgun_reload);
-		//_gestureEventListener.addHandler(GestureTypes.WINNER_GESTURE, R.raw.pos_applause);
-		_gestureEventListener.addHandler(GestureTypes.TILT_LEFT_GESTURE, R.raw.snd_lightsaber_on);
-		_gestureEventListener.addHandler(GestureTypes.TILT_RIGHT_GESTURE, R.raw.snd_lightsaber_out);
 	}
 
 	private View inflatePositiveEmotionsPage()
 	{
 		LayoutInflater inflater = LayoutInflater.from (this);
 		View result = inflater.inflate(R.layout.positive_emo_view, null);
-		inflateButton(result, R.id.central_button, "Laugh", R.raw.pos_laugh);
-		inflateButton(result, R.id.up_left_button, "Cheer", R.raw.pos_cheer);
-		inflateButton(result, R.id.up_right_button, "Aww", R.raw.pos_aww);
-		inflateButton(result, R.id.bottom_left_button, "Applause", R.raw.pos_applause);
-		inflateButton(result, R.id.bottom_right_button, "Yeah, baby!", R.raw.pos_yeah_baby);
-
+		inflateButton(result, R.id.central_button, "LAUGH", R.raw.pos_laugh);
+		inflateButton(result, R.id.up_left_button, "CHEER", R.raw.pos_cheer);
+		inflateButton(result, R.id.up_right_button, "AWW", R.raw.pos_aww);
+		inflateButton(result, R.id.bottom_left_button, "APPLAUSE", R.raw.pos_applause);
+		inflateButton(result, R.id.bottom_right_button, "YEAH, BABY!", R.raw.pos_yeah_baby);
 
 		return result;
 	}
@@ -198,13 +224,25 @@ public class MainActivity extends Activity
 	{
 		LayoutInflater inflater = LayoutInflater.from (this);
 		View result = inflater.inflate(R.layout.negative_emo_view, null);
-		inflateButton(result, R.id.up_left_button, "Boo", R.raw.neg_boo);
-		inflateButton(result, R.id.up_right_button, "Sad trombone", R.raw.neg_wah_wah);
-		inflateButton(result, R.id.bottom_left_button, "Shocked", R.raw.neg_shocked);
-		inflateButton(result, R.id.bottom_right_button, "Ba dum tss", R.raw.snd_ba_dum_tss);
+		inflateButton(result, R.id.up_left_button, "BOO", R.raw.neg_boo);
+		inflateButton(result, R.id.up_right_button, "SAD TROMBONE", R.raw.neg_wah_wah);
+		inflateButton(result, R.id.bottom_left_button, "SHOCKED", R.raw.neg_shocked);
+		inflateButton(result, R.id.bottom_right_button, "BA DUM TSS", R.raw.snd_ba_dum_tss);
 
 		return result;
 	}
+
+    private View inflateStarWarsEmotionPage()
+    {
+        LayoutInflater inflater = LayoutInflater.from (this);
+        View result = inflater.inflate(R.layout.starwars_emo_view, null);
+        inflateButton(result, R.id.up_left_button, "CHUBAKKA RAWRR", R.raw.lin_chubakka_rawrr);
+        inflateButton(result, R.id.up_right_button, "DARTH VADER", R.raw.lin_darth_vader_dont_make_me_destroy_you);
+        inflateButton(result, R.id.bottom_left_button, "YES, MY MASTER", R.raw.lin_darth_vader_yes_my_master);
+        inflateButton(result, R.id.bottom_right_button, "I'L BE BACK", R.raw.movie_ilbeback);
+
+        return result;
+    }
 
 	private void inflateButton(View page, int buttonId, String text, final int soundFileId)
 	{
