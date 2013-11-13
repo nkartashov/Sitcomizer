@@ -19,12 +19,12 @@
     <item>
         <shape>
             <gradient
-                    android:startColor="#FF6A6A"
-                    android:endColor="#FF6A6A"
-                    android:angle="45" />
+                    android:startColor="@android:color/holo_red_dark"
+                    android:endColor="@android:color/holo_red_dark"
+                    android:angle="0" />
             <stroke
                     android:width="0dp"
-                    android:color="#203800" />
+                    android:color="#8B0000" />
             <corners
                     android:radius="0dp" />
             <padding
