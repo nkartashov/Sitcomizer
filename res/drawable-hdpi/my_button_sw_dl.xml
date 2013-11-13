@@ -23,8 +23,8 @@
                     android:endColor="#ffffff"
                     android:angle="45" />
             <stroke
-                    android:width="0dp"
-                    android:color="#203800" />
+                    android:width="10dp"
+                    android:color="#000000" />
             <corners
                     android:radius="0dp" />
             <padding

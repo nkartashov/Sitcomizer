@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_pressed="true" >
+    <item android:state_pressed="true">
         <shape>
             <solid
                     android:color="#CC9900" />
             <stroke
                     android:width="2dp"
-                    android:color="#2f6699" />
+                    android:color="#CC9000" />
             <corners
                     android:radius="5dp" />
             <padding
@@ -23,8 +23,8 @@
                     android:endColor="#ffe600"
                     android:angle="45" />
             <stroke
-                    android:width="0dp"
-                    android:color="#203800" />
+                    android:width="10dp"
+                    android:color="#ff0200" />
             <corners
                     android:radius="0dp" />
             <padding

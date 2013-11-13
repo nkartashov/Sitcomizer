@@ -55,8 +55,6 @@ public class MainActivity extends Activity
         pages.add (page);
 
 
-
-
         CustomPagerAdapter pagerAdapter = new CustomPagerAdapter(pages);
         ViewPager viewPager = new ViewPager(this);
         viewPager.setAdapter(pagerAdapter);
@@ -237,8 +235,8 @@ public class MainActivity extends Activity
         LayoutInflater inflater = LayoutInflater.from (this);
         View result = inflater.inflate(R.layout.starwars_emo_view, null);
         inflateButton(result, R.id.up_left_button, "CHUBAKKA RAWRR", R.raw.lin_chubakka_rawrr);
-        inflateButton(result, R.id.up_right_button, "DARTH VADER", R.raw.lin_darth_vader_dont_make_me_destroy_you);
-        inflateButton(result, R.id.bottom_left_button, "YES, MY MASTER", R.raw.lin_darth_vader_yes_my_master);
+        inflateButton(result, R.id.up_right_button, "YES, MY MASTER", R.raw.lin_darth_vader_yes_my_master);
+        inflateButton(result, R.id.bottom_left_button, "DARTH VADER", R.raw.lin_darth_vader_dont_make_me_destroy_you);
         inflateButton(result, R.id.bottom_right_button, "I'L BE BACK", R.raw.movie_ilbeback);
 
         return result;
