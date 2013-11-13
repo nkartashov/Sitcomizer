@@ -48,6 +48,17 @@ public class MainActivity extends Activity
         page = inflatePositiveEmotionsPage();
         pages.add (page);
 
+        //BT test page
+        page = inflater.inflate(R.layout.negative_emo_view, null);
+        Button slaveButton = (Button) page.findViewById(R.id.up_left_button);
+        slaveButton.setText("Become slave");
+        slaveButton.setOnClickListener(new OnBecomeSlaveClickHandler(MainActivity.this));
+
+        Button masterButton = (Button) page.findViewById(R.id.up_right_button);
+        masterButton.setText("Become Master");
+        masterButton.setOnClickListener(new OnBecomeMasterClickHandler(MainActivity.this));
+        pages.add(page);
+
         CustomPagerAdapter pagerAdapter = new CustomPagerAdapter(pages);
         ViewPager viewPager = new ViewPager(this);
         viewPager.setAdapter(pagerAdapter);
@@ -69,7 +80,6 @@ public class MainActivity extends Activity
 		if (!USE_GESTURE_PASSIVE)
 			_gestureEventListener.setInactive();
 		super.onPause();
-
 	}
 
 	@Override
@@ -81,6 +91,13 @@ public class MainActivity extends Activity
 
 		_gestureEventListener.setGesturesOnState(USE_GESTURE);
 	}
+
+    @Override
+    protected void onDestroy() {
+        NetworkHelper.CloseAllSockets();
+        NetworkHelper.UnregisterReceiver();
+	    super.onDestroy();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -147,15 +164,22 @@ public class MainActivity extends Activity
             RAW_ON_TILT_RIGHT = R.raw.class.getField(sp.getString("list_tilt_right_key", "pos_applause"))
                     .getInt(R.raw.class.getField(sp.getString("list_tilt_right_key", "pos_applause")));
 
-            //Log.v(TAG, String.valueOf(RAW_ON_SHAKE));
 
-            _gestureEventListener.addHandler(GestureTypes.SHAKE_GESTURE, RAW_ON_SHAKE);
-            _gestureEventListener.addHandler(GestureTypes.WINNER_GESTURE, RAW_ON_WINNER);
-            _gestureEventListener.addHandler(GestureTypes.TILT_LEFT_GESTURE, RAW_ON_TILT_LEFT);
-            _gestureEventListener.addHandler(GestureTypes.TILT_RIGHT_GESTURE, RAW_ON_TILT_RIGHT);
+	        updateGestureHandler(GestureTypes.SHAKE_GESTURE, RAW_ON_SHAKE, USE_SHAKE);
+	        updateGestureHandler(GestureTypes.WINNER_GESTURE, RAW_ON_WINNER, USE_WINNER);
+	        updateGestureHandler(GestureTypes.TILT_LEFT_GESTURE, RAW_ON_TILT_LEFT, USE_TILT_LEFT);
+	        updateGestureHandler(GestureTypes.TILT_RIGHT_GESTURE, RAW_ON_TILT_RIGHT, USE_TILT_RIGHT);
         }
         catch (Exception e) {}
     }
+
+	private void updateGestureHandler(Integer gesture, Integer handler, boolean gestureState)
+	{
+		if (gestureState)
+			_gestureEventListener.addHandler(gesture, handler);
+		else
+			_gestureEventListener.removeGestureHandler(gesture);
+	}
 
 	private void setGestureEventListener()
 	{
@@ -173,11 +197,6 @@ public class MainActivity extends Activity
                 _gestureEventListener.gyroscopeEventListener(),
                 sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE),
                 SensorManager.SENSOR_DELAY_NORMAL);
-
-		_gestureEventListener.addHandler(GestureTypes.SHAKE_GESTURE, R.raw.snd_shotgun_reload);
-		//_gestureEventListener.addHandler(GestureTypes.WINNER_GESTURE, R.raw.pos_applause);
-		_gestureEventListener.addHandler(GestureTypes.TILT_LEFT_GESTURE, R.raw.snd_lightsaber_on);
-		_gestureEventListener.addHandler(GestureTypes.TILT_RIGHT_GESTURE, R.raw.snd_lightsaber_out);
 	}
 
 	private View inflatePositiveEmotionsPage()
